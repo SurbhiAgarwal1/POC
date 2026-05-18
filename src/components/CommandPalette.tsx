@@ -16,6 +16,18 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Filter items
+  const filteredResults = searchIndex.filter((item) =>
+    item.term.toLowerCase().includes(query.toLowerCase()) ||
+    item.category.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const handleSelect = (item: typeof searchIndex[0]) => {
+    onNavigate(item.link);
+    onClose();
+    setQuery('');
+  };
+
   useEffect(() => {
     if (isOpen) {
       inputRef.current?.focus();
@@ -51,19 +63,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  });
-
-  // Filter items
-  const filteredResults = searchIndex.filter((item) =>
-    item.term.toLowerCase().includes(query.toLowerCase()) ||
-    item.category.toLowerCase().includes(query.toLowerCase())
-  );
-
-  const handleSelect = (item: typeof searchIndex[0]) => {
-    onNavigate(item.link);
-    onClose();
-    setQuery('');
-  };
+  }, [isOpen, activeIndex, filteredResults]);
 
   if (!isOpen) return null;
 
