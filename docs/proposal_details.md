@@ -8,7 +8,7 @@ A senior UX Research & Product Strategy blueprint exploring how engineers discov
 
 Here is the recorded walkthrough session showing the workspace navigation, interactive fidelity toggles, AI groundings, and progressive disclosure schemas.
 
-![OTel Ecosystem Explorer Interactive Walkthrough](./media/otel_explorer_walkthrough_1779114390127.webp)
+![OTel Ecosystem Explorer Interactive Walkthrough](./media/exact_otel_walkthrough_1779128854176.webp)
 
 ---
 
