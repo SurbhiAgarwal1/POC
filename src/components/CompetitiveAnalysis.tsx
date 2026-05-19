@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { competitorAnalyses, CompetitorAnalysis } from '@/data/mockData';
-import { Award, ShieldAlert, Sparkles, CheckCircle2, AlertTriangle, ArrowRight, Eye, Star } from 'lucide-react';
+import { Award, ShieldAlert, CheckCircle2, AlertTriangle, ArrowRight, Eye, Star } from 'lucide-react';
 
 export default function CompetitiveAnalysis() {
   const [selectedCompetitor, setSelectedCompetitor] = useState<CompetitorAnalysis>(competitorAnalyses[0]);
@@ -154,7 +154,7 @@ export default function CompetitiveAnalysis() {
         <div className="p-6 rounded border border-[#2c2e35] bg-[#1e1f24] flex flex-col justify-between">
           <div className="space-y-4">
             <div className="p-2 w-fit rounded bg-[#17181c] border border-[#2c2e35] text-slate-400">
-              <Sparkles className="w-4 h-4" />
+              <Award className="w-4 h-4" />
             </div>
             <h3 className="text-xs font-mono text-slate-500 uppercase tracking-wide">Actionable Takeaway</h3>
             <p className="text-xs text-slate-200 leading-relaxed font-bold">

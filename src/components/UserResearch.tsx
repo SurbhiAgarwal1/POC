@@ -10,7 +10,6 @@ import {
   BrainCircuit, 
   ArrowUpRight, 
   MessageSquare,
-  Sparkles,
   Zap,
   Activity
 } from 'lucide-react';
@@ -372,7 +371,7 @@ export default function UserResearch() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs leading-relaxed">
           <div className="space-y-2 p-4 rounded bg-[#17181c] border border-[#2c2e35]">
             <h4 className="font-bold text-slate-200 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-slate-400" />
+              <Activity className="w-3.5 h-3.5 text-slate-400" />
               Progressive Disclosure Gap
             </h4>
             <p className="text-slate-400">

@@ -8,7 +8,7 @@ import {
   PlusCircle, 
   ExternalLink,
   ArrowRight,
-  Sparkles,
+  Layers,
   Terminal
 } from 'lucide-react';
 
@@ -174,7 +174,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                   Registry
                 </button>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center gap-1">
-                  <Sparkles className="w-2.5 h-2.5" /> Interactive IA Registry Explorer
+                  <Layers className="w-2.5 h-2.5" /> Interactive IA Registry Explorer
                 </span>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed max-w-4xl">

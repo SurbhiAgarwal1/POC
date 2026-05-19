@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Layout, ToggleLeft, ToggleRight, Sparkles, Terminal, Code2, GitCompare, Compass, CheckCircle } from 'lucide-react';
+import { Layout, ToggleLeft, ToggleRight, Terminal, Code2, GitCompare, Compass, CheckCircle } from 'lucide-react';
 
 export default function WireframeMockups() {
   const [isHighFi, setIsHighFi] = useState<boolean>(true);

@@ -91,7 +91,7 @@ export const personas: Persona[] = [
       "Spends hours debugging dependency mismatches between '@opentelemetry/api' and individual plugins.",
       "Semantic conventions change frequently, causing dashboard charts to silently break."
     ],
-    tools: ["VS Code", "GitHub", "npm", "Google", "ChatGPT-4", "Datadog"],
+    tools: ["VS Code", "GitHub", "npm", "Google", "StackOverflow", "Datadog"],
     mentalModel: "Observability is a 'plug-and-play' black-box utility that should run transparently.",
     journeyStep: "Struggles during the initial setup and configuration verification phase.",
     observabilityLiteracy: 45

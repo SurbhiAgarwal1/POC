@@ -15,7 +15,6 @@ import {
   ChevronRight,
   Database,
   ArrowRight,
-  Sparkles,
   Info,
   CheckCircle,
   AlertTriangle
