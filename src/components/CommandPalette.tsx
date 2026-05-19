@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Terminal, Cpu, Award, Users, ShieldAlert, FileText } from 'lucide-react';
+import { Search, Terminal, Cpu, Award, Users, FileText } from 'lucide-react';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -24,9 +24,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
     { term: 'SRE Lead persona study', category: 'Personas', action: 'research-section' },
     { term: 'Competitive AWS & Stripe Audits', category: 'Competitive Analysis', action: 'competitive-section' },
     { term: 'Wireframe spatial blueprints', category: 'Interactive Mockups', action: 'mockups-section' },
-    { term: 'High-Fidelity screens console', category: 'Interactive Mockups', action: 'mockups-section' },
-    { term: 'Stripe Spec Copilot Search', category: 'AI Discovery', action: 'ai-section' },
-    { term: 'Hallucination Grounding rules', category: 'AI Discovery', action: 'ai-section' }
+    { term: 'High-Fidelity screens console', category: 'Interactive Mockups', action: 'mockups-section' }
   ];
 
   const filteredResults = commandItems.filter(item => 
@@ -92,8 +90,6 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
         return <Award className="w-4 h-4 text-blue-400" />;
       case 'Interactive Mockups':
         return <Terminal className="w-4 h-4 text-indigo-400" />;
-      case 'AI Discovery':
-        return <ShieldAlert className="w-4 h-4 text-purple-400" />;
       default:
         return <FileText className="w-4 h-4 text-slate-400" />;
     }
@@ -125,7 +121,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
             ref={inputRef}
             type="text"
             className="w-full bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 border-0"
-            placeholder="Type a command or search (e.g. Java, persona, Stripe)..."
+            placeholder="Type a command or search..."
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
@@ -179,7 +175,6 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
               <kbd className="bg-[#1e1f24] px-1 rounded border border-[#2c2e35]">Enter</kbd> Select
             </span>
           </div>
-          <span>OpenTelemetry Explorer UX Research</span>
         </div>
       </div>
     </div>

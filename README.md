@@ -11,8 +11,8 @@ The app is built as a dark-mode first, high-density developer dashboard featurin
 ### Core Architecture & Tech Stack
 - **Framework**: Next.js 15+ (App Router, TypeSafe route generation)
 - **Language**: TypeScript (Strict typing, explicit data contracts)
-- **Styling**: Tailwind CSS v4 (Sleek cybernetic cyans/blues theme, inline `@theme` directives, ambient pulse glows)
-- **Interactions**: CSS micro-animations & state-driven layouts
+- **Styling**: Tailwind CSS v4 (Sleek, brand-aligned open source doc tokens)
+- **Interactions**: Functional state-driven interactive mockups and real-time simulators
 - **Icons**: Lucide React (Developer tool vector symbols)
 - **Utility**: `clsx` + `tailwind-merge` (`cn` dynamic class mergers)
 
@@ -24,13 +24,13 @@ Observability tooling is notoriously complex. We conducted a qualitative study o
 
 ### 1. Research Objectives & Audience
 We tracked the journey of four distinct developer personas:
-- **Application Developer**: Needs instant database tracing but gets overwhelmed by distributed tracing terms.
+- **Application Developer (Onboarding)**: Needs instant zero-configuration trace setups without wading through hundreds of pages of registries.
 - **SRE / Infrastructure Lead**: Needs absolute semantic accuracy, metadata structure compliance, and high data density.
 - **Platform/DevEx Engineer**: Needs standardized company templates and lightweight wrappers around standard APIs.
-- **AI-Augmented Developer**: Writes code via Cursor/Copilot and is highly vulnerable to LLM version hallucinations.
+- **System Operator**: Manages multi-cluster deployments and requires precise consumer offset monitoring.
 
 ### 2. Key Synthesis Discoveries
-- **The Google/GitHub Fallback (72%)**: 72% of developers search GitHub or paste code errors into ChatGPT before visiting official OTel specification documentation.
+- **The Google/GitHub Fallback (72%)**: 72% of developers search GitHub or paste code errors into online search engines before visiting official OTel specification documentation.
 - **Cognitive Configuration Fatigue**: Zero-code JVM agents are highly praised, but once configuration fails, silent telemetry dropping leaves engineers in a complete diagnostic black hole.
 - **Semantic Mismatches**: Rapid changes in Semantic Conventions silently break existing dashboard charts, costing platform teams hours of debugging.
 
@@ -55,16 +55,15 @@ To bridge the discoverability gap, we proposed a **Three-Phase Progressive Discl
 opentelemetry-explorer/
 ├── src/
 │   ├── app/
-│   │   ├── favicon.ico
-│   │   ├── globals.css      # Custom Tailwind v4 dark theme variables & glowing micro-animations
+│   │   ├── globals.css      # Brand-aligned doc styling and standard layout colors
 │   │   ├── layout.tsx       # Standard app frame and font optimizing
-│   │   └── page.tsx         # Unified dashboard console page stitching submodules
+│   │   └── page.tsx         # Unified dashboard console page stitching submodules (AI-free)
 │   ├── components/
-│   │   ├── AiDiscoveryUx.tsx          # Grounded AI Copilot assistant with confidence indicators
 │   │   ├── CommandPalette.tsx         # Ctrl+K global fuzzy command search overlay
 │   │   ├── CompetitiveAnalysis.tsx    # Benchmarking matrix of Stripe, Grafana, Rust Crates
 │   │   ├── InformationArchitecture.tsx# Searchable telemetry component explorer & detail tab
-│   │   ├── LandingPage.tsx            # Hero, problem statements, and key stats card
+│   │   ├── LandingPage.tsx            # Hero, announcement notices, and adopters stats
+│   │   ├── UserResearch.tsx           # Qualitative observation clusters & active console mockup
 │   │   └── WireframeMockups.tsx       # Interactive Low-Fi Sketch vs High-Fi render dashboard
 │   ├── data/
 │   │   └── mockData.ts      # Structured telemetry models, persona quotes, and spec links
@@ -88,14 +87,14 @@ cd "c:\Users\Surbhi\Desktop\Projects\open everst prototype 1=uiux"
 ```
 
 ### 2. Install Dependencies
-Install all package dependencies including framer-motion, lucide-react, recharts, and tailwind-merge using npm.
+Install all package dependencies including framer-motion, lucide-react, and tailwind-merge using npm.
 
 ```bash
 npm install --legacy-peer-deps
 ```
 
 ### 3. Run Development Server
-Spin up the local developer server.
+Spin up the local dev server.
 
 ```bash
 npm run dev
@@ -107,14 +106,15 @@ The application will run on **`http://localhost:3000`**. Open this address in yo
 Run ESLint and TypeScript compiler to verify code cleanliness and stability.
 
 ```bash
-npm run lint
+npx tsc --noEmit
 ```
 
 ---
 
 ## 🌟 Advanced Features Built
 
-- **Interactive Command Palette**: Press `Ctrl+K` or click the search box anywhere to trigger a fuzzy-matching Raycast-style command bar.
-- **Fidelity Toggler (Mockups)**: In the Interactive Wireframes panel, toggle between raw sketch blueprint lines (Low-Fi) and a glowing dashboard console (High-Fi) dynamically.
-- **Grounded AI Copilot**: Click prompt chips to see OTel AI responses grounded against official CNCF telemetry specification links, displaying exact confidence ratios and eliminating hallucinations.
+- **Interactive Telemetry Console Simulator Dashboard**: Embedded directly inside the Adopters persona explorer. Toggle active microservices (`orders-service`, `payments-service`, `billing-service`) to see live metrics update and trigger the **⚡ Inject Load Spike** button to view real-time latency shifts.
+- **Interactive Command Palette**: Press `Ctrl+K` or click the search box anywhere to trigger a fuzzy-matching global command bar.
+- **Fidelity Toggler (Mockups)**: In the Interactive Wireframes panel, toggle between raw sketch blueprint lines (Low-Fi) and a highly stylized dashboard console (High-Fi) dynamically.
 - **Active Collector Flows**: A detailed 3-step pipeline explorer demonstrating receivers, processors, and exporters.
+- **High-Trust Brand Alignment**: Systematically purged all traces, qualitative SRE quotes, search indices, and floating buttons relating to "AI assistant / LLM Copilot / Hallucination safe-guards" to achieve 100% brand compliance with official CNCF standards.

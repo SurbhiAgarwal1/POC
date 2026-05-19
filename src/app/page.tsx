@@ -7,7 +7,6 @@ import {
   Award, 
   Layers, 
   Layout, 
-  Sparkles, 
   Globe, 
   ChevronDown, 
   Moon, 
@@ -20,7 +19,6 @@ import UserResearch from '@/components/UserResearch';
 import CompetitiveAnalysis from '@/components/CompetitiveAnalysis';
 import InformationArchitecture from '@/components/InformationArchitecture';
 import WireframeMockups from '@/components/WireframeMockups';
-import AiDiscoveryUx from '@/components/AiDiscoveryUx';
 import CommandPalette from '@/components/CommandPalette';
 
 export default function Home() {
@@ -32,7 +30,7 @@ export default function Home() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
-      if (hash && ['overview', 'research-section', 'competitive-section', 'ia-section', 'mockups-section', 'ai-section'].includes(hash)) {
+      if (hash && ['overview', 'research-section', 'competitive-section', 'ia-section', 'mockups-section'].includes(hash)) {
         setActiveTab(hash);
       }
     };
@@ -60,7 +58,6 @@ export default function Home() {
     { id: 'competitive-section', label: 'Competitive Analysis', icon: <Award className="w-4 h-4" /> },
     { id: 'ia-section', label: 'Information Architecture', icon: <Layers className="w-4 h-4" /> },
     { id: 'mockups-section', label: 'Interactive Wireframes', icon: <Layout className="w-4 h-4" /> },
-    { id: 'ai-section', label: 'AI Discovery Explorer', icon: <Sparkles className="w-4 h-4" /> },
   ];
 
   const renderActiveComponent = () => {
@@ -75,8 +72,6 @@ export default function Home() {
         return <InformationArchitecture />;
       case 'mockups-section':
         return <WireframeMockups />;
-      case 'ai-section':
-        return <AiDiscoveryUx />;
       default:
         return <LandingPage onNavigate={handleTabChange} />;
     }
@@ -113,7 +108,7 @@ export default function Home() {
           </nav>
         </div>
 
-        {/* Right Section: Language, Theme Icon, and "Ask AI or search..." Input */}
+        {/* Right Section: Language, Theme Icon, and Search Input */}
         <div className="flex items-center gap-4">
           
           {/* Language Selector */}
@@ -128,14 +123,14 @@ export default function Home() {
             <Moon className="w-4 h-4 text-slate-400" />
           </div>
 
-          {/* Ask AI or search bar */}
+          {/* Search bar */}
           <button
             onClick={() => setIsCommandPaletteOpen(true)}
             className="flex items-center gap-2 px-3 py-1.5 rounded border border-[#2c2e35] bg-[#1a1b20] text-slate-400 hover:text-slate-200 hover:border-slate-700 transition-colors text-[11px] font-semibold cursor-pointer w-44 justify-between"
           >
             <div className="flex items-center gap-1.5">
               <Search className="w-3.5 h-3.5 text-slate-500" />
-              <span>Ask AI or search...</span>
+              <span>Search...</span>
             </div>
             <kbd className="hidden sm:inline bg-[#17181c] border border-[#2c2e35] px-1 py-0.5 rounded text-[9px] font-mono text-slate-500 leading-none">
               Ctrl K
@@ -286,14 +281,6 @@ export default function Home() {
             >
               Integrations
             </button>
-            <button
-              onClick={() => handleTabChange('ai-section')}
-              className={`w-full text-left px-4 py-3 rounded text-sm font-semibold font-mono cursor-pointer ${
-                activeTab === 'ai-section' ? 'bg-[#1e1f24] text-white' : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              Ask AI Assistant
-            </button>
           </div>
         )}
 
@@ -302,17 +289,6 @@ export default function Home() {
           {renderActiveComponent()}
         </main>
       </div>
-
-      {/* Floating Yellow "Ask AI" Button - MATCHING the real screenshot */}
-      <button
-        onClick={() => handleTabChange('ai-section')}
-        className="fixed bottom-6 right-6 z-40 bg-[#f5b301] hover:bg-[#e0a200] text-slate-950 px-4 py-2.5 rounded-lg flex items-center gap-2 font-bold text-xs tracking-wider shadow-md hover:scale-95 transition-all cursor-pointer font-sans border-none outline-none"
-      >
-        <svg className="w-4 h-4 text-slate-950 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-        </svg>
-        <span>Ask AI</span>
-      </button>
 
       {/* Interactive Command Palette Overlay */}
       <CommandPalette 

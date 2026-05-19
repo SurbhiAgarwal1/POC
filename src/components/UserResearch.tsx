@@ -18,10 +18,19 @@ import {
 export default function UserResearch() {
   const [selectedPersona, setSelectedPersona] = useState<Persona>(personas[0]);
   const [activeAffinityCategory, setActiveAffinityCategory] = useState<string>('all');
+  
+  // Interactive simulator states for developer dashboard mockup
+  const [consoleService, setConsoleService] = useState<string>('orders-service');
+  const [spike, setSpike] = useState<boolean>(false);
+
+  const handleLoadSpike = () => {
+    setSpike(true);
+    setTimeout(() => setSpike(false), 2000);
+  };
 
   const affinityNotes = [
     { text: "Had to hunt through 4 different github repos just to find what env vars disables tomcat tracing.", category: "fragmentation", author: "Dev Interview #4" },
-    { text: "My LLM generated code that used deprecated API fields from v0.24. Now my Jaeger charts show empty spans.", category: "ai-fatigue", author: "Prompting Dev" },
+    { text: "Outdated blogs suggest deprecated SDK dependency fields from v0.24. Now my Jaeger charts show empty spans.", category: "documentation-drift", author: "Application Dev" },
     { text: "The difference between @opentelemetry/api and @opentelemetry/sdk-node is never clearly explained in tutorials.", category: "fragmentation", author: "Dev Interview #12" },
     { text: "SRE demands we send 15 different customer attributes, but our legal team says that violates PII standard rules.", category: "governance", author: "Platform Architect" },
     { text: "We spend 3 days checking package dependency ranges because a minor release broke our typescript compilation.", category: "versioning", author: "Dev Interview #9" },
@@ -44,7 +53,7 @@ export default function UserResearch() {
           User Personas & Cohort Synthesis
         </h1>
         <p className="text-sm text-slate-400 max-w-3xl leading-relaxed">
-          Based on 24 in-depth qualitative developer interviews, 110 survey responses, and active GitHub Issue analyses, we synthesized 4 key developer roles that configure and consume OpenTelemetry.
+          Based on 24 in-depth qualitative developer interviews, 110 survey responses, and active GitHub Issue analyses, we synthesized key developer roles that configure and consume OpenTelemetry.
         </p>
       </section>
 
@@ -193,6 +202,113 @@ export default function UserResearch() {
               </p>
             </div>
           </div>
+
+          {/* Interactive Live Ecosystem User Interface Mockup Dashboard */}
+          <div className="border-t border-[#2c2e35] pt-6 space-y-4">
+            <div className="space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono text-slate-500 uppercase font-bold tracking-wider">Ecosystem Explorer Live Console</span>
+                <span className="flex items-center gap-1.5 text-[9px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Live Collector Active
+                </span>
+              </div>
+              <h4 className="text-xs font-bold text-slate-200">Interactive Telemetry Dashboard Mockup</h4>
+              <p className="text-[11px] text-slate-400 leading-relaxed font-sans">
+                A live functional prototype of the new OpenTelemetry user console interface. Toggle services, trace metrics, and inject mock loads directly below.
+              </p>
+            </div>
+
+            {/* Console Control & Visualizer Frame */}
+            <div className="rounded border border-[#2c2e35] bg-[#17181c] overflow-hidden">
+              
+              {/* Header Bar */}
+              <div className="bg-[#1a1b20] border-b border-[#2c2e35] px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#039acc]" />
+                  <span className="text-[10px] font-mono font-bold text-slate-400">collector-v1.25.0</span>
+                </div>
+                <div className="flex gap-2">
+                  {['orders-service', 'payments-service', 'billing-service'].map((svc) => (
+                    <button
+                      key={svc}
+                      onClick={() => setConsoleService(svc)}
+                      className={`px-2 py-0.5 rounded text-[9px] font-mono border transition-all cursor-pointer ${
+                        consoleService === svc 
+                          ? 'border-[#039acc] bg-[#1e1f24] text-[#38bdf8] font-bold' 
+                          : 'border-transparent text-slate-550 hover:text-slate-350'
+                      }`}
+                    >
+                      {svc}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Console Body Grid */}
+              <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                {/* Stats Counters */}
+                <div className="md:col-span-1 space-y-3">
+                  <div className="p-3 rounded border border-[#2c2e35] bg-[#1a1b20]/60 space-y-1">
+                    <span className="text-[9px] font-mono text-slate-500 uppercase">Traces Transmitted</span>
+                    <div className="text-lg font-extrabold text-slate-200 font-mono">
+                      {consoleService === 'orders-service' ? '1,248,390' : consoleService === 'payments-service' ? '820,491' : '304,115'}
+                    </div>
+                    <span className="text-[9px] font-mono text-emerald-450 flex items-center gap-0.5">
+                      <span>↑ 4.2%</span> <span className="text-slate-600">vs last hour</span>
+                    </span>
+                  </div>
+
+                  <div className="p-3 rounded border border-[#2c2e35] bg-[#1a1b20]/60 space-y-1">
+                    <span className="text-[9px] font-mono text-slate-500 uppercase">Average Latency</span>
+                    <div className="text-lg font-extrabold text-[#38bdf8] font-mono">
+                      {consoleService === 'orders-service' ? '124 ms' : consoleService === 'payments-service' ? '410 ms' : '88 ms'}
+                    </div>
+                    <span className="text-[9px] font-mono text-slate-500 font-sans">P99 percentile bounds</span>
+                  </div>
+                </div>
+
+                {/* Live Latency Distribution Chart */}
+                <div className="md:col-span-2 p-3.5 rounded border border-[#2c2e35] bg-[#1a1b20]/30 flex flex-col justify-between space-y-3">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <span className="text-[9px] font-mono text-slate-500 uppercase">Latency Distribution (Real-Time)</span>
+                    <button
+                      onClick={handleLoadSpike}
+                      className="px-2 py-0.5 rounded bg-[#039acc] hover:bg-[#0288b8] text-slate-900 font-bold text-[9px] font-mono transition-all cursor-pointer border-none outline-none"
+                    >
+                      ⚡ Inject Load Spike
+                    </button>
+                  </div>
+
+                  {/* Horizontal Bar Chart representation */}
+                  <div className="space-y-2 py-1 flex-1 flex flex-col justify-center">
+                    {[
+                      { range: '0-50ms', pct: consoleService === 'orders-service' ? (spike ? 15 : 40) : (spike ? 10 : 25) },
+                      { range: '50-100ms', pct: consoleService === 'orders-service' ? (spike ? 20 : 35) : (spike ? 15 : 30) },
+                      { range: '100-250ms', pct: consoleService === 'orders-service' ? (spike ? 45 : 18) : (spike ? 40 : 25) },
+                      { range: '250ms+', pct: consoleService === 'orders-service' ? (spike ? 20 : 7) : (spike ? 35 : 20) },
+                    ].map((row, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-[10px] font-mono">
+                        <span className="w-14 text-slate-500 text-right">{row.range}</span>
+                        <div className="flex-1 bg-[#1e1f24] border border-[#2c2e35] h-3.5 rounded overflow-hidden">
+                          <div 
+                            className="bg-[#38bdf8] h-full rounded transition-all duration-500"
+                            style={{ width: `${row.pct}%` }}
+                          />
+                        </div>
+                        <span className="w-8 text-slate-350 font-bold">{row.pct}%</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="text-[9px] font-mono text-slate-600 text-center">
+                    Active trace aggregation window: 1 minute (grounded semantic spec compliant)
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -208,7 +324,7 @@ export default function UserResearch() {
 
         {/* Filter Categories */}
         <div className="flex flex-wrap gap-2">
-          {['all', 'fragmentation', 'ai-fatigue', 'versioning', 'governance'].map((cat) => (
+          {['all', 'fragmentation', 'documentation-drift', 'versioning', 'governance'].map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveAffinityCategory(cat)}
@@ -233,7 +349,7 @@ export default function UserResearch() {
               <div className="flex items-center justify-between text-[9px] font-mono">
                 <span className={`px-2 py-0.5 rounded border ${
                   note.category === 'fragmentation' ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' :
-                  note.category === 'ai-fatigue' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
+                  note.category === 'documentation-drift' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
                   note.category === 'versioning' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
                   'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                 }`}>

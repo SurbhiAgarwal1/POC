@@ -24,18 +24,18 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       <div className="bg-[#16243b] border border-[#2c2e35] p-5 rounded text-center text-xs text-slate-300 space-y-2">
         <div>
           Observability Summit NA 2026, May 21–22, Minneapolis.{' '}
-          <a href="https://observabilitysummit.io" target="_blank" rel="noreferrer" className="text-[#38bdf8] hover:underline font-bold">
+          <a href="https://opentelemetry.io/" target="_blank" rel="noreferrer" className="text-[#38bdf8] hover:underline font-bold">
             Register
           </a>{' '}
           now or view the{' '}
-          <a href="https://observabilitysummit.io/schedule" target="_blank" rel="noreferrer" className="text-[#38bdf8] hover:underline font-bold">
+          <a href="https://opentelemetry.io/" target="_blank" rel="noreferrer" className="text-[#38bdf8] hover:underline font-bold">
             schedule
           </a>!
         </div>
         <div className="text-[11px] text-slate-400 font-mono">
           KubeCon + CloudNativeCon India 2026, 18-19 June, Mumbai.{' '}
           Come{' '}
-          <a href="https://kubecon.io" target="_blank" rel="noreferrer" className="text-[#38bdf8] hover:underline font-bold">
+          <a href="https://events.linuxfoundation.org/" target="_blank" rel="noreferrer" className="text-[#38bdf8] hover:underline font-bold">
             collaborate, learn, and share
           </a>{' '}
           with the Cloud Native community!
