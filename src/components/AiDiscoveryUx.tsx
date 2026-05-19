@@ -2,201 +2,188 @@
 
 import React, { useState } from 'react';
 import { aiScenarios, AiScenarios } from '@/data/mockData';
-import { Sparkles, Terminal, ShieldCheck, CheckCircle2, ChevronRight, ArrowRight, MessageSquare, BookOpen, AlertCircle } from 'lucide-react';
+import { Sparkles, Terminal, ShieldCheck, CheckCircle2, ChevronRight, ArrowRight, MessageSquare, BookOpen, AlertCircle, Search, HelpCircle } from 'lucide-react';
 
 export default function AiDiscoveryUx() {
   const [selectedScenario, setSelectedScenario] = useState<AiScenarios>(aiScenarios[0]);
-  const [chatInput, setChatInput] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
   const handlePromptSelect = (scenario: AiScenarios) => {
     setIsTyping(true);
-    // Simulate slight loading latency for generative feel
+    // Simulate slight loading latency for a high-trust verification experience
     setTimeout(() => {
       setSelectedScenario(scenario);
       setIsTyping(false);
-    }, 400);
+    }, 300);
   };
 
+  // Filter scenarios if user searches
+  const filteredScenarios = aiScenarios.filter(s => 
+    s.prompt.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    s.assistantSummary.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="space-y-12 pb-20">
+    <div className="space-y-8 pb-20">
+      
       {/* Page Header */}
-      <section className="space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-950/40 text-xs text-cyan-300 font-mono">
-          <Sparkles className="w-3.5 h-3.5" />
-          AI-Augmented Telemetry Discovery
+      <section className="space-y-2 border-b border-[#2c2e35] pb-6">
+        <div className="text-slate-400 text-xs font-semibold uppercase tracking-wider font-mono">
+          Assisted Discovery
         </div>
-        <h1 className="text-2xl font-bold text-slate-100">AI / LLM-Aware Telemetry Discovery</h1>
-        <p className="text-xs text-slate-400 max-w-2xl">
-          Generative AI is changing how developers configure tools. Examine how we build a high-trust grounding system to combat LLM hallucinations and secure telemetry schemas.
+        <h1 className="text-3xl font-extrabold text-slate-100 tracking-tight flex items-center gap-2.5">
+          Semantic Spec Copilot & Config Explainer
+        </h1>
+        <p className="text-sm text-slate-400 max-w-3xl leading-relaxed">
+          Combat LLM hallucinations and configuration drift. Our semantic assistant leverages direct spec grounding to generate type-safe, validated environment parameters with verifiable citations.
         </p>
       </section>
 
-      {/* Suggested Prompts Block */}
-      <section className="space-y-3">
-        <h3 className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider">Suggested Developer Prompts</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          {aiScenarios.map((scenario, index) => (
-            <button
-              key={index}
-              onClick={() => handlePromptSelect(scenario)}
-              className={`p-3.5 rounded-lg border text-left text-xs transition-all cursor-pointer flex flex-col justify-between items-start gap-3 h-full group ${
-                selectedScenario.prompt === scenario.prompt 
-                  ? 'border-cyan-500 bg-cyan-950/15 glow-panel-cyan' 
-                  : 'border-slate-800 bg-slate-950/20 hover:border-slate-700 hover:bg-slate-900/40'
-              }`}
-            >
-              <span className="font-semibold text-slate-300 leading-normal group-hover:text-slate-100 transition-colors">
-                &ldquo;{scenario.prompt}&rdquo;
-              </span>
-              <div className="flex items-center justify-between w-full text-[9px] font-mono text-slate-500">
-                <span>Scenario 0{index + 1}</span>
-                <ChevronRight className="w-3.5 h-3.5 text-slate-600 group-hover:text-cyan-400 transition-colors" />
-              </div>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* Main Conversation Assistant Frame */}
+      {/* Main Console Grid */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left Side: Chat Workspace */}
-        <div className="lg:col-span-8 p-6 rounded-xl border border-slate-800 bg-slate-950/70 glassmorphism space-y-6 relative">
+        {/* Left Side: Query Editor & Scenario Indices */}
+        <div className="lg:col-span-5 space-y-4">
           
-          {/* Assistant Header */}
-          <div className="flex items-center justify-between border-b border-slate-900 pb-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/25 flex items-center justify-center">
-                <Sparkles className="w-4.5 h-4.5" />
-              </div>
-              <div>
-                <h3 className="text-xs font-bold text-slate-200">OTel Semantic Copilot</h3>
-                <span className="text-[9px] font-mono text-emerald-400 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                  Grounded in Semantic Specs v1.25.0
-                </span>
-              </div>
-            </div>
-
-            <div className="text-[10px] font-mono text-slate-500">
-              Session ID: <span className="text-slate-400">otel-ai-512</span>
-            </div>
-          </div>
-
-          {/* Interactive Chat Output */}
-          <div className="space-y-6 min-h-[300px] flex flex-col justify-end">
-            
-            {/* User Prompt */}
-            <div className="flex items-start gap-3 justify-end">
-              <div className="bg-cyan-950/40 border border-cyan-800/30 p-3 rounded-xl rounded-tr-none text-xs text-cyan-200 max-w-[85%] font-medium">
-                {selectedScenario.prompt}
-              </div>
-              <div className="w-7 h-7 rounded-full bg-slate-800 font-mono text-[9px] font-bold flex items-center justify-center text-slate-400 shrink-0">
-                USER
-              </div>
-            </div>
-
-            {/* Assistant Answer */}
-            <div className="flex items-start gap-3">
-              <div className="w-7 h-7 rounded-full bg-cyan-500 text-slate-950 font-mono text-[9px] font-bold flex items-center justify-center shrink-0">
-                AI
-              </div>
-              
-              <div className="space-y-4 max-w-[85%] w-full">
-                
-                {/* Loader / Text block */}
-                {isTyping ? (
-                  <div className="flex gap-1.5 items-center py-2">
-                    <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce" />
-                    <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce [animation-delay:0.2s]" />
-                    <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce [animation-delay:0.4s]" />
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    <div className="bg-slate-900/40 border border-slate-850 p-4 rounded-xl rounded-tl-none text-xs text-slate-300 leading-relaxed font-medium">
-                      {selectedScenario.assistantSummary}
-                    </div>
-
-                    {/* Grounded Code Block */}
-                    <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-slate-500 uppercase tracking-wide">Grounded Setup Code</div>
-                      <div className="relative border border-slate-900 bg-slate-900/60 p-4 rounded-lg font-mono text-[11px] text-slate-300">
-                        <div className="absolute top-2 right-2 text-[9px] bg-slate-800 border border-slate-700 px-1.5 py-0.5 rounded text-slate-400 uppercase">
-                          Source Code
-                        </div>
-                        <pre className="overflow-x-auto whitespace-pre-wrap">{selectedScenario.generatedCode}</pre>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Side: Trust & Grounding Audit Panel */}
-        <div className="lg:col-span-4 space-y-6">
-          
-          {/* Trust Score Card */}
-          <div className="p-4 rounded-xl border border-slate-800 bg-slate-950/40 space-y-4">
-            <h4 className="text-[10px] font-mono text-cyan-400 uppercase tracking-wide">Trust & Grounding Audit</h4>
-            
-            <div className="flex items-center gap-3">
-              <div className="text-3xl font-black text-emerald-400 font-mono">
-                {selectedScenario.confidenceScore}%
-              </div>
-              <div className="space-y-0.5 text-xs">
-                <div className="font-bold text-slate-200 flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-                  Grounding Verified
-                </div>
-                <div className="text-[10px] text-slate-500">Hallucination risk: Minimal</div>
-              </div>
-            </div>
-
-            {/* Progress gauge */}
-            <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-950">
-              <div 
-                className="bg-emerald-400 h-full rounded-full transition-all duration-500" 
-                style={{ width: `${selectedScenario.confidenceScore}%` }}
+          {/* Query Bar */}
+          <div className="p-4 rounded border border-[#2c2e35] bg-[#1e1f24] space-y-3">
+            <h3 className="text-[10px] font-mono text-slate-450 uppercase font-bold">Semantic Search</h3>
+            <div className="relative">
+              <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-500" />
+              <input
+                type="text"
+                placeholder="Ask or search spec attributes..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-[#17181c] border border-[#2c2e35] text-xs text-slate-200 rounded pl-9 pr-4 py-2 focus:outline-none focus:border-[#039acc]"
               />
             </div>
           </div>
 
-          {/* Sources Citations */}
-          <div className="p-4 rounded-xl border border-slate-800 bg-slate-950/40 space-y-4">
-            <h4 className="text-[10px] font-mono text-cyan-400 uppercase tracking-wide flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
-              Verified CNCF Sources
-            </h4>
-
-            <div className="space-y-2">
-              {selectedScenario.sources.map((source, idx) => (
-                <div key={idx} className="p-2.5 rounded border border-slate-900 bg-slate-950/60 text-xs hover:border-slate-800 transition-colors">
-                  <div className="font-semibold text-slate-300 truncate mb-1">
-                    {source.title}
+          {/* Scenario Buttons */}
+          <div className="space-y-2">
+            <div className="text-[10px] font-mono text-slate-500 uppercase font-bold">Standard Grounded Scenarios</div>
+            
+            {filteredScenarios.length > 0 ? (
+              filteredScenarios.map((scenario, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePromptSelect(scenario)}
+                  className={`w-full p-3.5 rounded border text-left text-xs transition-all cursor-pointer flex justify-between items-center gap-3 ${
+                    selectedScenario.prompt === scenario.prompt 
+                      ? 'border-[#039acc] bg-[#1e1f24]' 
+                      : 'border-[#2c2e35] bg-[#17181c] hover:border-slate-650 hover:bg-[#1e1f24]/50'
+                  }`}
+                >
+                  <div className="space-y-1">
+                    <span className="font-semibold text-slate-300 block leading-relaxed">
+                      {scenario.prompt}
+                    </span>
+                    <span className="text-[10px] text-slate-500 font-mono">Scenario 0{index + 1}</span>
                   </div>
-                  <div className="flex justify-between items-center text-[10px] font-mono text-slate-500">
-                    <span className="text-emerald-400/90 font-bold">{source.confidence}% confidence</span>
-                    <a href={source.url} target="_blank" rel="noreferrer" className="text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-0.5">
-                      Spec Link
-                      <ArrowRight className="w-2.5 h-2.5" />
-                    </a>
+                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                </button>
+              ))
+            ) : (
+              <div className="text-center py-8 border border-dashed border-[#2c2e35] rounded text-slate-500 text-xs">
+                No scenarios match your search query.
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Right Side: Grounded Explainer Workspace (Stripe / GitHub docs layout) */}
+        <div className="lg:col-span-7 space-y-6">
+          
+          <div className="p-6 rounded border border-[#2c2e35] bg-[#1e1f24] space-y-6">
+            
+            {/* Header info */}
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#2c2e35] pb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded bg-[#17181c] border border-[#2c2e35] flex items-center justify-center text-slate-400">
+                  <Sparkles className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-slate-200">Grounded Explainer</h4>
+                  <p className="text-[9px] font-mono text-emerald-400">Validated against Semantic Specs v1.25.0</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[9px] font-mono text-slate-500">Hallucination Audit:</span>
+                <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded text-[10px] font-mono font-bold">
+                  SECURE
+                </span>
+              </div>
+            </div>
+
+            {/* Explainer Body */}
+            {isTyping ? (
+              <div className="min-h-[220px] flex flex-col items-center justify-center space-y-3">
+                <div className="flex gap-1.5 items-center py-2">
+                  <span className="w-2 h-2 bg-[#039acc] rounded-full animate-bounce" />
+                  <span className="w-2 h-2 bg-[#039acc] rounded-full animate-bounce [animation-delay:0.1s]" />
+                  <span className="w-2 h-2 bg-[#039acc] rounded-full animate-bounce [animation-delay:0.2s]" />
+                </div>
+                <p className="text-[11px] font-mono text-slate-500">Retrieving Semantic Mappings...</p>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                
+                {/* Grounded Summary text */}
+                <div className="space-y-2">
+                  <h5 className="text-[10px] font-mono text-slate-500 uppercase tracking-wide">Technical Synthesis</h5>
+                  <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                    {selectedScenario.assistantSummary}
+                  </p>
+                </div>
+
+                {/* Generated Configuration block */}
+                <div className="space-y-2">
+                  <h5 className="text-[10px] font-mono text-slate-500 uppercase tracking-wide">Validated Code Template</h5>
+                  <div className="relative border border-[#2c2e35] bg-[#17181c] p-4 rounded font-mono text-xs text-slate-350 leading-relaxed">
+                    <div className="absolute top-2 right-2 text-[9px] bg-[#1e1f24] border border-[#2c2e35] px-1.5 py-0.5 rounded text-slate-500 uppercase font-mono">
+                      Configuration
+                    </div>
+                    <pre className="overflow-x-auto whitespace-pre-wrap">{selectedScenario.generatedCode}</pre>
                   </div>
                 </div>
-              ))}
-            </div>
+
+                {/* Spec citations */}
+                <div className="space-y-3 border-t border-[#2c2e35] pt-4">
+                  <h5 className="text-[10px] font-mono text-slate-500 uppercase tracking-wide flex items-center gap-1.5">
+                    <BookOpen className="w-3.5 h-3.5 text-slate-400" />
+                    Verified CNCF Specifications Citations
+                  </h5>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {selectedScenario.sources.map((source, idx) => (
+                      <div key={idx} className="p-2.5 rounded border border-[#2c2e35] bg-[#17181c]/70 text-xs flex flex-col justify-between gap-2">
+                        <span className="font-semibold text-slate-300 leading-tight">
+                          {source.title}
+                        </span>
+                        <div className="flex justify-between items-center text-[10px] font-mono">
+                          <span className="text-emerald-400">{source.confidence}% confidence</span>
+                          <a href={source.url} target="_blank" rel="noreferrer" className="text-[#039acc] hover:underline flex items-center gap-0.5">
+                            Spec Link
+                            <ArrowRight className="w-2.5 h-2.5" />
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Hallucination Risk Alert */}
-          <div className="p-4 rounded-xl border border-amber-950/20 bg-amber-950/5 text-xs text-slate-400 leading-normal flex gap-2">
+          <div className="p-4 rounded border border-amber-500/10 bg-amber-500/5 text-xs text-slate-400 leading-relaxed flex gap-3">
             <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
             <p>
-              <strong className="text-slate-300">LLM Developer Note:</strong> Without consolidated OTel registry indexes, LLMs frequently mix deprecated alpha schemas with v1 APIs. This grounding matrix forces models to verify attributes against the core spec.
+              <strong className="text-slate-300">LLM Hallucination Safe-Guard:</strong> Without unified OTel index explorer tools, AI generators frequently write deprecated spring agents or wrong env suffixes. This grounded portal enforces type matching directly against active specs registries.
             </p>
           </div>
-
         </div>
       </section>
     </div>

@@ -33,102 +33,101 @@ export default function UserResearch() {
     : affinityNotes.filter(n => n.category === activeAffinityCategory);
 
   return (
-    <div className="space-y-12 pb-20">
+    <div className="space-y-8 pb-20">
+      
       {/* Intro Header */}
-      <section className="space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-950/40 text-xs text-cyan-300 font-mono">
-          <Users className="w-3.5 h-3.5" />
-          DX User Research Cohorts
+      <section className="space-y-2 border-b border-[#2c2e35] pb-6">
+        <div className="text-slate-400 text-xs font-semibold uppercase tracking-wider font-mono">
+          Research Synthesis
         </div>
-        <h1 className="text-2xl font-bold text-slate-100">User Personas & Synthesis</h1>
-        <p className="text-xs text-slate-400 max-w-2xl">
-          Based on 24 in-depth qualitative developer interviews, 110 survey responses, and active GitHub Issue analysis. We identified 4 key roles that consume OpenTelemetry instrumentation data.
+        <h1 className="text-3xl font-extrabold text-slate-100 tracking-tight">
+          User Personas & Cohort Synthesis
+        </h1>
+        <p className="text-sm text-slate-400 max-w-3xl leading-relaxed">
+          Based on 24 in-depth qualitative developer interviews, 110 survey responses, and active GitHub Issue analyses, we synthesized 4 key developer roles that configure and consume OpenTelemetry.
         </p>
       </section>
 
       {/* Personas Interactive Portal */}
       <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        
         {/* Persona Selectors Column */}
-        <div className="space-y-3 lg:col-span-1">
-          <h3 className="text-[11px] font-mono text-cyan-400 uppercase tracking-wider mb-2">Select Research Cohort</h3>
+        <div className="space-y-2 lg:col-span-1">
+          <div className="text-[10px] font-mono text-slate-500 uppercase font-bold mb-2">Select Research Cohort</div>
           {personas.map((persona) => (
             <button
               key={persona.id}
               onClick={() => setSelectedPersona(persona)}
-              className={`w-full text-left p-4 rounded-xl border transition-all duration-200 cursor-pointer flex items-center justify-between group ${
+              className={`w-full text-left p-3.5 rounded border transition-all cursor-pointer flex items-center justify-between group ${
                 selectedPersona.id === persona.id
-                  ? 'border-cyan-500/30 bg-cyan-950/20 shadow-md shadow-cyan-500/5 glow-panel-cyan'
-                  : 'border-slate-800 bg-slate-950/20 hover:border-slate-700 hover:bg-slate-900/40'
+                  ? 'border-[#039acc] bg-[#1e1f24]'
+                  : 'border-[#2c2e35] bg-[#17181c] hover:border-slate-650 hover:bg-[#1e1f24]/50'
               }`}
             >
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-mono font-bold ${
-                    selectedPersona.id === persona.id ? 'bg-cyan-500 text-slate-950' : 'bg-slate-800 text-slate-400'
-                  }`}>
-                    {persona.avatar}
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-slate-200 group-hover:text-slate-100 transition-colors">
-                      {persona.name}
-                    </h4>
-                    <p className="text-[10px] text-slate-500">
-                      {persona.role}
-                    </p>
-                  </div>
+              <div className="flex items-center gap-2.5">
+                <div className={`w-8 h-8 rounded flex items-center justify-center text-xs font-mono font-bold ${
+                  selectedPersona.id === persona.id ? 'bg-[#039acc] text-[#17181c]' : 'bg-[#1e1f24] text-slate-400 border border-[#2c2e35]'
+                }`}>
+                  {persona.avatar}
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-slate-200">
+                    {persona.name}
+                  </h4>
+                  <p className="text-[10px] text-slate-500">
+                    {persona.role}
+                  </p>
                 </div>
               </div>
-              <ArrowUpRight className={`w-4 h-4 transition-transform ${
-                selectedPersona.id === persona.id ? 'text-cyan-400 translate-x-0.5 -translate-y-0.5' : 'text-slate-600'
+              <ArrowUpRight className={`w-4 h-4 transition-colors ${
+                selectedPersona.id === persona.id ? 'text-[#039acc]' : 'text-slate-600'
               }`} />
             </button>
           ))}
         </div>
 
         {/* Selected Persona Detail Panel */}
-        <div className="lg:col-span-2 p-6 rounded-xl border border-slate-800 bg-slate-950/70 glassmorphism space-y-6 relative overflow-hidden">
-          {/* Ambient Glow */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl opacity-40 pointer-events-none" />
-
+        <div className="lg:col-span-2 p-6 rounded border border-[#2c2e35] bg-[#1e1f24] space-y-6">
+          
           {/* Role Header */}
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-900 pb-4">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#2c2e35] pb-4">
             <div className="space-y-1">
               <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
                 {selectedPersona.name}
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-slate-800 text-slate-400 uppercase">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-[#2c2e35] text-slate-400 uppercase">
                   {selectedPersona.experience}
                 </span>
               </h2>
-              <p className="text-xs font-mono text-cyan-400">{selectedPersona.role}</p>
+              <p className="text-xs font-mono text-slate-400">{selectedPersona.role}</p>
             </div>
             
             {/* Literacy Indicator */}
-            <div className="flex items-center gap-3 bg-slate-900/60 border border-slate-800 px-3 py-1.5 rounded-lg">
-              <span className="text-[10px] font-mono text-slate-400">Observability Literacy:</span>
-              <div className="w-16 bg-slate-800 h-2 rounded-full overflow-hidden">
+            <div className="flex items-center gap-3 bg-[#17181c] border border-[#2c2e35] px-3 py-1.5 rounded text-xs">
+              <span className="text-[10px] font-mono text-slate-500">Observability Literacy:</span>
+              <div className="w-16 bg-[#1e1f24] h-2 rounded border border-[#2c2e35] overflow-hidden">
                 <div 
-                  className="bg-cyan-500 h-full rounded-full transition-all duration-500" 
+                  className="bg-[#039acc] h-full rounded-full transition-all duration-350" 
                   style={{ width: `${selectedPersona.observabilityLiteracy}%` }}
                 />
               </div>
-              <span className="text-[10px] font-mono text-cyan-300 font-bold">
+              <span className="text-[10px] font-mono text-slate-300 font-bold">
                 {selectedPersona.observabilityLiteracy}/100
               </span>
             </div>
           </div>
 
           {/* Quote Card */}
-          <div className="p-4 rounded-lg bg-cyan-950/10 border-l-2 border-cyan-400 flex gap-3 italic">
-            <MessageSquare className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-            <p className="text-xs text-cyan-200 leading-relaxed font-medium">
+          <div className="p-4 rounded border border-[#2c2e35] bg-[#17181c]/50 flex gap-3 italic">
+            <MessageSquare className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+            <p className="text-xs text-slate-300 leading-relaxed font-medium">
               &ldquo;{selectedPersona.quote}&rdquo;
             </p>
           </div>
 
           {/* Profile Text */}
           <div className="space-y-1">
-            <h4 className="text-[10px] font-mono text-cyan-400 uppercase tracking-wide">Cohort Profile</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <h4 className="text-[10px] font-mono text-slate-500 uppercase tracking-wide">Cohort Profile</h4>
+            <p className="text-xs text-slate-350 leading-relaxed">
               {selectedPersona.description}
             </p>
           </div>
@@ -138,13 +137,13 @@ export default function UserResearch() {
             {/* Goals */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-200">
-                <Target className="w-4 h-4 text-emerald-400" />
+                <Target className="w-4 h-4 text-emerald-500" />
                 Primary Core Goals
               </div>
               <ul className="space-y-1.5">
                 {selectedPersona.goals.map((goal, index) => (
                   <li key={index} className="text-xs text-slate-400 flex items-start gap-2">
-                    <span className="text-emerald-400 font-mono mt-0.5">•</span>
+                    <span className="text-emerald-500 font-mono mt-0.5">•</span>
                     <span>{goal}</span>
                   </li>
                 ))}
@@ -154,13 +153,13 @@ export default function UserResearch() {
             {/* Pain Points */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-200">
-                <AlertCircle className="w-4 h-4 text-red-400" />
+                <AlertCircle className="w-4 h-4 text-red-500" />
                 DX Frustrations & Pain Points
               </div>
               <ul className="space-y-1.5">
                 {selectedPersona.painPoints.map((pain, index) => (
                   <li key={index} className="text-xs text-slate-400 flex items-start gap-2">
-                    <span className="text-red-400 font-mono mt-0.5">•</span>
+                    <span className="text-red-500 font-mono mt-0.5">•</span>
                     <span>{pain}</span>
                   </li>
                 ))}
@@ -169,15 +168,15 @@ export default function UserResearch() {
           </div>
 
           {/* Tech Stack & Mental Model Footer */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-900 text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[#2c2e35] text-xs">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-slate-300 font-bold">
-                <Wrench className="w-3.5 h-3.5 text-cyan-400" />
+                <Wrench className="w-3.5 h-3.5 text-slate-400" />
                 Favorite Development Tools
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {selectedPersona.tools.map((tool, idx) => (
-                  <span key={idx} className="bg-slate-900 px-2 py-0.5 rounded border border-slate-800/80 text-[10px] text-slate-400 font-mono">
+                  <span key={idx} className="bg-[#17181c] px-2 py-0.5 rounded border border-[#2c2e35] text-[10px] text-slate-400 font-mono">
                     {tool}
                   </span>
                 ))}
@@ -186,10 +185,10 @@ export default function UserResearch() {
 
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-slate-300 font-bold">
-                <BrainCircuit className="w-3.5 h-3.5 text-purple-400" />
+                <BrainCircuit className="w-3.5 h-3.5 text-slate-400" />
                 UX Mental Model
               </div>
-              <p className="text-[11px] text-slate-400 italic">
+              <p className="text-[11px] text-slate-400 italic leading-relaxed">
                 &ldquo;{selectedPersona.mentalModel}&rdquo;
               </p>
             </div>
@@ -199,11 +198,11 @@ export default function UserResearch() {
 
       {/* User Affinity Mapping Block */}
       <section className="space-y-4">
-        <div className="space-y-1">
-          <h2 className="text-xs font-mono text-cyan-400 uppercase tracking-wider">Research Synthesis Synthesis</h2>
-          <h3 className="text-lg font-bold text-slate-100">Interactive Affinity Map Clusters</h3>
-          <p className="text-xs text-slate-400">
-            Qualitative developer quotes and observations gathered during testing, grouped by information architecture failures.
+        <div className="space-y-1 border-b border-[#2c2e35] pb-4">
+          <div className="text-[10px] font-mono text-slate-500 uppercase font-bold">Observation Clusters</div>
+          <h3 className="text-lg font-bold text-slate-100">Affinity Mapping Clusters</h3>
+          <p className="text-xs text-slate-400 leading-relaxed">
+            Developer quotes and raw qualitative observations synthesized during research testing, categorized by structural UX issues.
           </p>
         </div>
 
@@ -213,13 +212,13 @@ export default function UserResearch() {
             <button
               key={cat}
               onClick={() => setActiveAffinityCategory(cat)}
-              className={`px-3 py-1 rounded-full text-[10px] font-mono border transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded text-[10px] font-mono border transition-all cursor-pointer ${
                 activeAffinityCategory === cat
-                  ? 'border-cyan-500 bg-cyan-500/10 text-cyan-300'
-                  : 'border-slate-800 bg-slate-950/20 text-slate-500 hover:border-slate-700'
+                  ? 'border-[#039acc] bg-[#1e1f24] text-slate-200'
+                  : 'border-[#2c2e35] bg-[#17181c] text-slate-400 hover:border-slate-650'
               }`}
             >
-              {cat === 'all' ? 'All Sticky Notes' : `${cat.toUpperCase()}`}
+              {cat === 'all' ? 'All Notes' : `${cat.toUpperCase()}`}
             </button>
           ))}
         </div>
@@ -229,19 +228,14 @@ export default function UserResearch() {
           {filteredAffinity.map((note, idx) => (
             <div
               key={idx}
-              className={`p-4 rounded-xl border space-y-3 relative overflow-hidden transition-all duration-300 hover:-translate-y-0.5 ${
-                note.category === 'fragmentation' ? 'border-cyan-900/30 bg-cyan-950/5' :
-                note.category === 'ai-fatigue' ? 'border-purple-900/30 bg-purple-950/5' :
-                note.category === 'versioning' ? 'border-amber-900/30 bg-amber-950/5' :
-                'border-emerald-900/30 bg-emerald-950/5'
-              }`}
+              className="p-4 rounded border border-[#2c2e35] bg-[#1e1f24] space-y-3 relative overflow-hidden"
             >
               <div className="flex items-center justify-between text-[9px] font-mono">
-                <span className={`px-2 py-0.5 rounded ${
-                  note.category === 'fragmentation' ? 'bg-cyan-500/10 text-cyan-400' :
-                  note.category === 'ai-fatigue' ? 'bg-purple-500/10 text-purple-400' :
-                  note.category === 'versioning' ? 'bg-amber-500/10 text-amber-400' :
-                  'bg-emerald-500/10 text-emerald-400'
+                <span className={`px-2 py-0.5 rounded border ${
+                  note.category === 'fragmentation' ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' :
+                  note.category === 'ai-fatigue' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
+                  note.category === 'versioning' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
+                  'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                 }`}>
                   {note.category.toUpperCase()}
                 </span>
@@ -256,13 +250,13 @@ export default function UserResearch() {
       </section>
 
       {/* Behavioral Patterns Journey Map */}
-      <section className="p-6 rounded-xl border border-slate-800 bg-slate-950/40 space-y-6">
-        <h3 className="text-xs font-mono text-cyan-400 uppercase tracking-wider">Cognitive UX Insights Map</h3>
+      <section className="p-6 rounded border border-[#2c2e35] bg-[#1e1f24] space-y-6">
+        <div className="text-[10px] font-mono text-slate-500 uppercase font-bold border-b border-[#2c2e35] pb-3">Cognitive UX Insights Map</div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs leading-relaxed">
-          <div className="space-y-2 p-4 rounded-lg bg-slate-900/30 border border-slate-900">
+          <div className="space-y-2 p-4 rounded bg-[#17181c] border border-[#2c2e35]">
             <h4 className="font-bold text-slate-200 flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <Sparkles className="w-3.5 h-3.5 text-slate-400" />
               Progressive Disclosure Gap
             </h4>
             <p className="text-slate-400">
@@ -270,9 +264,9 @@ export default function UserResearch() {
             </p>
           </div>
 
-          <div className="space-y-2 p-4 rounded-lg bg-slate-900/30 border border-slate-900">
+          <div className="space-y-2 p-4 rounded bg-[#17181c] border border-[#2c2e35]">
             <h4 className="font-bold text-slate-200 flex items-center gap-1.5">
-              <Zap className="w-4 h-4 text-purple-400" />
+              <Zap className="w-3.5 h-3.5 text-slate-400" />
               The Singleton Illusion
             </h4>
             <p className="text-slate-400">
@@ -280,9 +274,9 @@ export default function UserResearch() {
             </p>
           </div>
 
-          <div className="space-y-2 p-4 rounded-lg bg-slate-900/30 border border-slate-900">
+          <div className="space-y-2 p-4 rounded bg-[#17181c] border border-[#2c2e35]">
             <h4 className="font-bold text-slate-200 flex items-center gap-1.5">
-              <Activity className="w-4 h-4 text-emerald-400" />
+              <Activity className="w-3.5 h-3.5 text-slate-400" />
               Silent Failure Auditing
             </h4>
             <p className="text-slate-400">

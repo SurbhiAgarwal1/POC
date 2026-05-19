@@ -1,6 +1,20 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { 
+  Compass, 
+  Users, 
+  Award, 
+  Layers, 
+  Layout, 
+  Sparkles, 
+  Globe, 
+  ChevronDown, 
+  Moon, 
+  Search, 
+  Menu, 
+  X 
+} from 'lucide-react';
 import LandingPage from '@/components/LandingPage';
 import UserResearch from '@/components/UserResearch';
 import CompetitiveAnalysis from '@/components/CompetitiveAnalysis';
@@ -8,44 +22,33 @@ import InformationArchitecture from '@/components/InformationArchitecture';
 import WireframeMockups from '@/components/WireframeMockups';
 import AiDiscoveryUx from '@/components/AiDiscoveryUx';
 import CommandPalette from '@/components/CommandPalette';
-import { 
-  Terminal, 
-  Users, 
-  Layers, 
-  Search, 
-  Award, 
-  Layout, 
-  Sparkles, 
-  Compass, 
-  Menu, 
-  X,
-  Activity,
-  GitBranch,
-  Globe,
-  Moon,
-  ChevronDown
-} from 'lucide-react';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<string>('overview');
-  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
 
-  // Keyboard shortcut Ctrl+K to trigger search command palette
+  // Sync window hash for deep-linking prototype states
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        setIsCommandPaletteOpen((prev) => !prev);
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && ['overview', 'research-section', 'competitive-section', 'ia-section', 'mockups-section', 'ai-section'].includes(hash)) {
+        setActiveTab(hash);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('hashchange', handleHashChange);
+    // Initial check
+    handleHashChange();
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
 
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
+    window.location.hash = tabId;
     setIsMobileMenuOpen(false);
     // Scroll smoothly back to top on navigation change
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -90,19 +93,19 @@ export default function Home() {
           
           {/* OTel SVG Logo & Branding */}
           <div className="flex items-center gap-2.5 cursor-pointer group" onClick={() => handleTabChange('overview')}>
-            <div className="w-7 h-7 bg-white/5 rounded flex items-center justify-center border border-white/10 group-hover:border-cyan-500/50 transition-colors">
+            <div className="w-7 h-7 bg-white/5 rounded flex items-center justify-center border border-white/10 group-hover:border-[#039acc] transition-colors">
               <svg className="w-4.5 h-4.5 text-white" viewBox="0 0 32 32" fill="currentColor">
                 <path d="M16 2A14 14 0 1030 16 14 14 0 0016 2zm4.3 19.3L15 22.8a1 1 0 01-1.2-.6l-4.5-9.1a1 1 0 01.3-1.3l5.3-3.5a1 1 0 011.2.1l4.5 9.1a1 1 0 01-.3 1.3z" opacity="0.95" />
                 <path d="M16.6 9.6L12 12.7l3 6.1 4.6-3.1z" fill="#38bdf8" />
               </svg>
             </div>
-            <span className="font-bold text-sm text-white tracking-wide font-sans group-hover:text-cyan-300 transition-colors">OpenTelemetry</span>
+            <span className="font-bold text-sm text-white tracking-wide font-sans group-hover:text-slate-200 transition-colors">OpenTelemetry</span>
           </div>
 
           {/* Core Navigation Links */}
           <nav className="hidden md:flex items-center gap-5 text-xs font-semibold text-slate-300">
             <span className="hover:text-white transition-colors cursor-pointer py-4">Docs</span>
-            <span className="text-white border-b-2 border-cyan-400 pb-4 pt-4 px-1 cursor-pointer font-bold">Ecosystem</span>
+            <span className="text-white border-b-2 border-[#039acc] pb-4 pt-4 px-1 cursor-pointer font-bold">Ecosystem</span>
             <span className="hover:text-white transition-colors cursor-pointer py-4">Status</span>
             <span className="hover:text-white transition-colors cursor-pointer py-4">Community</span>
             <span className="hover:text-white transition-colors cursor-pointer py-4">Training</span>
@@ -120,9 +123,9 @@ export default function Home() {
             <ChevronDown className="w-3 h-3 text-slate-400" />
           </div>
 
-          {/* Theme Icon (Styled as a clickable crescent moon) */}
+          {/* Theme Icon */}
           <div className="p-1.5 rounded text-slate-400 hover:text-white hover:bg-slate-900/40 transition-colors cursor-pointer">
-            <Moon className="w-4 h-4 text-cyan-400 animate-pulse" />
+            <Moon className="w-4 h-4 text-slate-400" />
           </div>
 
           {/* Ask AI or search bar */}
@@ -157,7 +160,7 @@ export default function Home() {
           <div className="py-6 px-5 space-y-6 flex-1 flex flex-col justify-between">
             <div className="space-y-5">
               <div className="space-y-1.5">
-                <h3 className="text-[11px] font-bold text-slate-300 uppercase tracking-widest font-mono">Ecosystem</h3>
+                <h3 className="text-[11px] font-bold text-slate-350 uppercase tracking-widest font-mono">Ecosystem</h3>
                 <div className="h-[1px] bg-[#2c2e35]/80 w-full" />
               </div>
 
@@ -167,8 +170,8 @@ export default function Home() {
                   onClick={() => handleTabChange('overview')}
                   className={`w-full text-left px-3 py-1.5 rounded text-xs font-semibold transition-all cursor-pointer ${
                     activeTab === 'overview'
-                      ? 'text-cyan-400 font-bold bg-[#1a1b20]/80 border-l-2 border-cyan-400 pl-2'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a1b20]/30 pl-3'
+                      ? 'text-white font-bold bg-[#1e1f24] border-l-2 border-[#039acc] pl-2'
+                      : 'text-slate-450 hover:text-slate-200 hover:bg-[#1a1b20]/30 pl-3'
                   }`}
                 >
                   Demo
@@ -178,12 +181,12 @@ export default function Home() {
                   onClick={() => handleTabChange('ia-section')}
                   className={`w-full text-left px-3 py-1.5 rounded text-xs font-semibold transition-all cursor-pointer ${
                     activeTab === 'ia-section'
-                      ? 'text-cyan-400 font-bold bg-[#1a1b20]/80 border-l-2 border-cyan-400 pl-2'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a1b20]/30 pl-3'
+                      ? 'text-white font-bold bg-[#1e1f24] border-l-2 border-[#039acc] pl-2'
+                      : 'text-slate-450 hover:text-slate-200 hover:bg-[#1a1b20]/30 pl-3'
                   }`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] text-cyan-500">▶</span>
+                    <span className="text-[9px] text-[#039acc]">▶</span>
                     <span>Registry</span>
                   </div>
                 </button>
@@ -192,8 +195,8 @@ export default function Home() {
                   onClick={() => handleTabChange('research-section')}
                   className={`w-full text-left px-3 py-1.5 rounded text-xs font-semibold transition-all cursor-pointer ${
                     activeTab === 'research-section'
-                      ? 'text-cyan-400 font-bold bg-[#1a1b20]/80 border-l-2 border-cyan-400 pl-2'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a1b20]/30 pl-3'
+                      ? 'text-white font-bold bg-[#1e1f24] border-l-2 border-[#039acc] pl-2'
+                      : 'text-slate-450 hover:text-slate-200 hover:bg-[#1a1b20]/30 pl-3'
                   }`}
                 >
                   Adopters
@@ -203,8 +206,8 @@ export default function Home() {
                   onClick={() => handleTabChange('competitive-section')}
                   className={`w-full text-left px-3 py-1.5 rounded text-xs font-semibold transition-all cursor-pointer ${
                     activeTab === 'competitive-section'
-                      ? 'text-cyan-400 font-bold bg-[#1a1b20]/80 border-l-2 border-cyan-400 pl-2'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a1b20]/30 pl-3'
+                      ? 'text-white font-bold bg-[#1e1f24] border-l-2 border-[#039acc] pl-2'
+                      : 'text-slate-450 hover:text-slate-200 hover:bg-[#1a1b20]/30 pl-3'
                   }`}
                 >
                   Third-party distributions
@@ -214,8 +217,8 @@ export default function Home() {
                   onClick={() => handleTabChange('mockups-section')}
                   className={`w-full text-left px-3 py-1.5 rounded text-xs font-semibold transition-all cursor-pointer ${
                     activeTab === 'mockups-section'
-                      ? 'text-cyan-400 font-bold bg-[#1a1b20]/80 border-l-2 border-cyan-400 pl-2'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a1b20]/30 pl-3'
+                      ? 'text-white font-bold bg-[#1e1f24] border-l-2 border-[#039acc] pl-2'
+                      : 'text-slate-450 hover:text-slate-200 hover:bg-[#1a1b20]/30 pl-3'
                   }`}
                 >
                   Integrations
@@ -228,10 +231,10 @@ export default function Home() {
               <div className="rounded border border-[#2c2e35] p-2.5 text-[9px] font-mono text-slate-500 leading-normal space-y-1 bg-[#1a1b20]/40">
                 <div className="flex justify-between items-center text-slate-400 font-bold">
                   <span>LFX Proposal</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#039acc]" />
                 </div>
                 <p>Ecosystem Explorer IA</p>
-                <div className="pt-1.5 text-cyan-500 hover:underline flex items-center gap-1">
+                <div className="pt-1.5 text-slate-450 flex items-center gap-1">
                   <span>Candidate: SurbhiAgarwal1</span>
                 </div>
               </div>
@@ -242,11 +245,11 @@ export default function Home() {
         {/* Mobile Menu Panel */}
         {isMobileMenuOpen && (
           <div className="lg:hidden fixed inset-x-0 top-14 bottom-0 z-40 bg-[#17181c] border-b border-[#2c2e35] flex flex-col py-6 px-6 space-y-2">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest font-mono px-3 mb-2">Ecosystem Pages</h3>
+            <h3 className="text-xs font-bold text-slate-450 uppercase tracking-widest font-mono px-3 mb-2">Ecosystem Pages</h3>
             <button
               onClick={() => handleTabChange('overview')}
               className={`w-full text-left px-4 py-3 rounded text-sm font-semibold font-mono cursor-pointer ${
-                activeTab === 'overview' ? 'bg-[#1a1b20] text-cyan-400' : 'text-slate-400 hover:text-slate-200'
+                activeTab === 'overview' ? 'bg-[#1e1f24] text-white' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               Demo
@@ -254,7 +257,7 @@ export default function Home() {
             <button
               onClick={() => handleTabChange('ia-section')}
               className={`w-full text-left px-4 py-3 rounded text-sm font-semibold font-mono cursor-pointer ${
-                activeTab === 'ia-section' ? 'bg-[#1a1b20] text-cyan-400' : 'text-slate-400 hover:text-slate-200'
+                activeTab === 'ia-section' ? 'bg-[#1e1f24] text-white' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               Registry
@@ -262,7 +265,7 @@ export default function Home() {
             <button
               onClick={() => handleTabChange('research-section')}
               className={`w-full text-left px-4 py-3 rounded text-sm font-semibold font-mono cursor-pointer ${
-                activeTab === 'research-section' ? 'bg-[#1a1b20] text-cyan-400' : 'text-slate-400 hover:text-slate-200'
+                activeTab === 'research-section' ? 'bg-[#1e1f24] text-white' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               Adopters
@@ -270,7 +273,7 @@ export default function Home() {
             <button
               onClick={() => handleTabChange('competitive-section')}
               className={`w-full text-left px-4 py-3 rounded text-sm font-semibold font-mono cursor-pointer ${
-                activeTab === 'competitive-section' ? 'bg-[#1a1b20] text-cyan-400' : 'text-slate-400 hover:text-slate-200'
+                activeTab === 'competitive-section' ? 'bg-[#1e1f24] text-white' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               Third-party distributions
@@ -278,7 +281,7 @@ export default function Home() {
             <button
               onClick={() => handleTabChange('mockups-section')}
               className={`w-full text-left px-4 py-3 rounded text-sm font-semibold font-mono cursor-pointer ${
-                activeTab === 'mockups-section' ? 'bg-[#1a1b20] text-cyan-400' : 'text-slate-400 hover:text-slate-200'
+                activeTab === 'mockups-section' ? 'bg-[#1e1f24] text-white' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               Integrations
@@ -286,7 +289,7 @@ export default function Home() {
             <button
               onClick={() => handleTabChange('ai-section')}
               className={`w-full text-left px-4 py-3 rounded text-sm font-semibold font-mono cursor-pointer ${
-                activeTab === 'ai-section' ? 'bg-[#1a1b20] text-cyan-400' : 'text-slate-400 hover:text-slate-200'
+                activeTab === 'ai-section' ? 'bg-[#1e1f24] text-white' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               Ask AI Assistant
@@ -300,12 +303,11 @@ export default function Home() {
         </main>
       </div>
 
-      {/* Floating Yellow "Ask AI" Button - EXACT copy of the live screenshot */}
+      {/* Floating Yellow "Ask AI" Button - MATCHING the real screenshot */}
       <button
         onClick={() => handleTabChange('ai-section')}
-        className="fixed bottom-6 right-6 z-40 bg-[#f5b301] hover:bg-[#e0a200] text-slate-950 px-4 py-2.5 rounded-lg flex items-center gap-2 font-bold text-xs tracking-wider shadow-lg shadow-[#f5b301]/10 hover:shadow-[#f5b301]/25 active:scale-95 transition-all cursor-pointer font-sans"
+        className="fixed bottom-6 right-6 z-40 bg-[#f5b301] hover:bg-[#e0a200] text-slate-950 px-4 py-2.5 rounded-lg flex items-center gap-2 font-bold text-xs tracking-wider shadow-md hover:scale-95 transition-all cursor-pointer font-sans border-none outline-none"
       >
-        {/* Gold sparkling pen icon */}
         <svg className="w-4 h-4 text-slate-950 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
         </svg>
