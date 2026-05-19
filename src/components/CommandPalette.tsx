@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Terminal, FileText, Users, Award, ShieldAlert, Cpu } from 'lucide-react';
-import { searchIndex } from '@/data/mockData';
+import { Search, Terminal, Cpu, Award, Users, ShieldAlert, FileText } from 'lucide-react';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -13,51 +12,66 @@ interface CommandPaletteProps {
 export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandPaletteProps) {
   const [query, setQuery] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Filter items
-  const filteredResults = searchIndex.filter((item) =>
-    item.term.toLowerCase().includes(query.toLowerCase()) ||
+  const commandItems = [
+    { term: 'OpenTelemetry Demo Setup', category: 'Registry Recommendations', action: 'overview' },
+    { term: 'Registry Packages Index', category: 'Information Architecture', action: 'ia-section' },
+    { term: 'Semantic Convention Metrics schema', category: 'IA Recommendations', action: 'ia-section' },
+    { term: 'Auto Instrumentation setups', category: 'IA Recommendations', action: 'ia-section' },
+    { term: 'Developer Interviews Synthesis', category: 'Personas', action: 'research-section' },
+    { term: 'SRE Lead persona study', category: 'Personas', action: 'research-section' },
+    { term: 'Competitive AWS & Stripe Audits', category: 'Competitive Analysis', action: 'competitive-section' },
+    { term: 'Wireframe spatial blueprints', category: 'Interactive Mockups', action: 'mockups-section' },
+    { term: 'High-Fidelity screens console', category: 'Interactive Mockups', action: 'mockups-section' },
+    { term: 'Stripe Spec Copilot Search', category: 'AI Discovery', action: 'ai-section' },
+    { term: 'Hallucination Grounding rules', category: 'AI Discovery', action: 'ai-section' }
+  ];
+
+  const filteredResults = commandItems.filter(item => 
+    item.term.toLowerCase().includes(query.toLowerCase()) || 
     item.category.toLowerCase().includes(query.toLowerCase())
   );
 
-  const handleSelect = (item: typeof searchIndex[0]) => {
-    onNavigate(item.link);
-    onClose();
-    setQuery('');
-  };
-
+  // Focus input when opened
   useEffect(() => {
     if (isOpen) {
-      inputRef.current?.focus();
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+      setTimeout(() => inputRef.current?.focus(), 50);
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
   }, [isOpen]);
 
-  // Handle keys inside palette
+  // Handle outside clicks to close
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [isOpen, onClose]);
+
+  // Key navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return;
 
-      if (e.key === 'Escape') {
-        onClose();
-      } else if (e.key === 'ArrowDown') {
+      if (e.key === 'ArrowDown') {
         e.preventDefault();
-        setActiveIndex((prev) => (prev + 1) % filteredResults.length);
+        setActiveIndex(prev => (prev + 1) % Math.max(1, filteredResults.length));
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        setActiveIndex((prev) => (prev - 1 + filteredResults.length) % filteredResults.length);
+        setActiveIndex(prev => (prev - 1 + filteredResults.length) % Math.max(1, filteredResults.length));
       } else if (e.key === 'Enter') {
         e.preventDefault();
         if (filteredResults[activeIndex]) {
           handleSelect(filteredResults[activeIndex]);
         }
+      } else if (e.key === 'Escape') {
+        onClose();
       }
     };
 
@@ -70,7 +84,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
   const getIcon = (category: string) => {
     switch (category) {
       case 'Personas':
-        return <Users className="w-4 h-4 text-cyan-400" />;
+        return <Users className="w-4 h-4 text-[#039acc]" />;
       case 'Information Architecture':
       case 'IA Recommendations':
         return <Cpu className="w-4 h-4 text-emerald-400" />;
@@ -81,8 +95,14 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
       case 'AI Discovery':
         return <ShieldAlert className="w-4 h-4 text-purple-400" />;
       default:
-        return <FileText className="w-4 h-4 text-gray-400" />;
+        return <FileText className="w-4 h-4 text-slate-400" />;
     }
+  };
+
+  const handleSelect = (item: typeof commandItems[0]) => {
+    onNavigate(item.action);
+    onClose();
+    setQuery('');
   };
 
   return (
@@ -96,10 +116,10 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
       {/* Main Palette */}
       <div 
         ref={containerRef}
-        className="relative w-full max-w-lg overflow-hidden rounded-xl border border-slate-800 bg-slate-950/95 glassmorphism shadow-2xl transition-all glow-panel-cyan"
+        className="relative w-full max-w-lg overflow-hidden rounded-xl border border-[#2c2e35] bg-[#1e1f24] shadow-2xl transition-all"
       >
         {/* Search Input */}
-        <div className="flex items-center border-b border-slate-800 px-4 py-3">
+        <div className="flex items-center border-b border-[#2c2e35] px-4 py-3">
           <Search className="w-5 h-5 text-slate-400 mr-3" />
           <input
             ref={inputRef}
@@ -112,7 +132,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
               setActiveIndex(0);
             }}
           />
-          <div className="rounded border border-slate-800 bg-slate-900 px-1.5 py-0.5 text-[10px] font-mono text-slate-400 shadow-sm">
+          <div className="rounded border border-[#2c2e35] bg-[#17181c] px-1.5 py-0.5 text-[10px] font-mono text-slate-400 shadow-sm">
             ESC
           </div>
         </div>
@@ -125,17 +145,17 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
                 <button
                   key={idx}
                   onClick={() => handleSelect(item)}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left text-xs transition-colors ${
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left text-xs transition-colors cursor-pointer ${
                     idx === activeIndex 
-                      ? 'bg-cyan-500/10 text-cyan-200 border-l-2 border-cyan-400' 
-                      : 'text-slate-300 hover:bg-slate-900/60 hover:text-slate-100'
+                      ? 'bg-[#17181c] text-slate-100 border-l-2 border-[#039acc]' 
+                      : 'text-slate-300 hover:bg-[#17181c]/60 hover:text-slate-100'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     {getIcon(item.category)}
                     <span>{item.term}</span>
                   </div>
-                  <span className="text-[10px] text-slate-500 uppercase tracking-wider bg-slate-900 px-2 py-0.5 rounded border border-slate-800/80">
+                  <span className="text-[10px] text-slate-500 uppercase tracking-wider bg-[#17181c] px-2 py-0.5 rounded border border-[#2c2e35]">
                     {item.category}
                   </span>
                 </button>
@@ -150,13 +170,13 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-slate-900 bg-slate-950 px-4 py-2.5 text-[10px] text-slate-500 font-mono">
+        <div className="flex items-center justify-between border-t border-[#2c2e35] bg-[#17181c] px-4 py-2.5 text-[10px] text-slate-500 font-mono">
           <div className="flex gap-4">
             <span className="flex items-center gap-1">
-              <kbd className="bg-slate-900 px-1 rounded border border-slate-800">↑↓</kbd> Navigate
+              <kbd className="bg-[#1e1f24] px-1 rounded border border-[#2c2e35]">↑↓</kbd> Navigate
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="bg-slate-900 px-1 rounded border border-slate-800">Enter</kbd> Select
+              <kbd className="bg-[#1e1f24] px-1 rounded border border-[#2c2e35]">Enter</kbd> Select
             </span>
           </div>
           <span>OpenTelemetry Explorer UX Research</span>
